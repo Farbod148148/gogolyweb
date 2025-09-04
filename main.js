@@ -1,12 +1,12 @@
-const chat = document.getElementById('chat');
 const input = document.getElementById('input');
+const chatBox = document.getElementById('chat-box');
 
 input.addEventListener('keypress', async (e) => {
   if (e.key === 'Enter') {
-    const userMsg = input.value.trim();
-    if (!userMsg) return;
+    const userText = input.value.trim();
+    if (!userText) return;
 
-    addMessage(userMsg, 'user');
+    addMessage(userText, 'user');
     input.value = '';
 
     const systemPrompt = `
@@ -24,21 +24,22 @@ input.addEventListener('keypress', async (e) => {
         model: 'openai/gpt-3.5-turbo',
         messages: [
           { role: 'system', content: systemPrompt },
-          { role: 'user', content: userMsg }
+          { role: 'user', content: userText }
         ]
       })
     });
 
     const data = await response.json();
-    const botMsg = data.choices?.[0]?.message?.content || 'پاسخی دریافت نشد.';
-    addMessage(botMsg, 'bot');
+    const botText = data.choices?.[0]?.message?.content || 'پاسخی دریافت نشد.';
+    addMessage(botText, 'bot');
   }
 });
 
 function addMessage(text, role) {
   const div = document.createElement('div');
   div.className = `message ${role}`;
-  div.textContent = text;
-  chat.appendChild(div);
-  chat.scrollTop = chat.scrollHeight;
+  div.innerHTML = text;
+  div.onclick = () => navigator.clipboard.writeText(div.innerText);
+  chatBox.appendChild(div);
+  chatBox.scrollTop = chatBox.scrollHeight;
 }
