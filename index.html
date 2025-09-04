@@ -1,9 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html lang="fa">
 <head>
-  <title>سایت من</title>
+  <meta charset="UTF-8">
+  <title>گوگولی</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Tahoma', sans-serif;
+    }
+
+    h1 {
+      color: #00ffff;
+      font-size: 4rem;
+      text-shadow:
+        0 0 5px #00ffff,
+        0 0 10px #00ffff,
+        0 0 20px #00ffff,
+        0 0 40px #00ffff;
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow:
+          0 0 5px #00ffff,
+          0 0 10px #00ffff,
+          0 0 20px #00ffff,
+          0 0 40px #00ffff;
+      }
+      to {
+        text-shadow:
+          0 0 10px #ff00ff,
+          0 0 20px #ff00ff,
+          0 0 30px #ff00ff,
+          0 0 50px #ff00ff;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h1>سلام! این سایت هنوز در حال طراحی هست</h1>
+  <h1>گوگولی</h1>
 </body>
 </html>
