@@ -1,50 +1,38 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>گوگولی</title>
+  <title>هاشم AI</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      background-color: #000;
+      font-family: sans-serif;
+      background: #f0f0f0;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
-      height: 100vh;
-      font-family: 'Tahoma', sans-serif;
+      padding: 2rem;
     }
-
-    h1 {
-      color: #00ffff;
-      font-size: 4rem;
-      text-shadow:
-        0 0 5px #00ffff,
-        0 0 10px #00ffff,
-        0 0 20px #00ffff,
-        0 0 40px #00ffff;
-      animation: glow 2s infinite alternate;
+    #chat {
+      width: 100%;
+      max-width: 600px;
+      background: white;
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-
-    @keyframes glow {
-      from {
-        text-shadow:
-          0 0 5px #00ffff,
-          0 0 10px #00ffff,
-          0 0 20px #00ffff,
-          0 0 40px #00ffff;
-      }
-      to {
-        text-shadow:
-          0 0 10px #ff00ff,
-          0 0 20px #ff00ff,
-          0 0 30px #ff00ff,
-          0 0 50px #ff00ff;
-      }
+    .message {
+      margin: 0.5rem 0;
+      padding: 0.5rem;
+      border-radius: 8px;
     }
+    .user { background: #d1e7dd; text-align: right; }
+    .bot { background: #f8d7da; text-align: left; }
   </style>
 </head>
 <body>
-  <h1>گوگولی</h1>
+  <h1>چت با هاشم AI</h1>
+  <div id="chat"></div>
+  <input id="input" type="text" placeholder="سوالت رو بپرس..." style="width: 100%; max-width: 600px; margin-top: 1rem; padding: 0.5rem;">
+  <script src="main.js"></script>
 </body>
 </html>
