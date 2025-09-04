@@ -1,12 +1,3 @@
-function copyText(element) {
-  const text = element.innerText;
-  navigator.clipboard.writeText(text).then(() => {
-    element.style.border = '2px dashed #198754';
-    setTimeout(() => {
-      element.style.border = 'none';
-    }, 1000);
-  });
-}
 const input = document.getElementById('input');
 const chatBox = document.getElementById('chat-box');
 
@@ -47,7 +38,7 @@ input.addEventListener('keypress', async (e) => {
 function addMessage(text, role) {
   const div = document.createElement('div');
   div.className = `message ${role}`;
-  div.innerHTML = text; // پشتیبانی از HTML مثل بولد و لینک
+  div.innerHTML = text;
   div.onclick = () => navigator.clipboard.writeText(div.innerText);
   chatBox.appendChild(div);
   chatBox.scrollTop = chatBox.scrollHeight;
