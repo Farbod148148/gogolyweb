@@ -1,32 +1,65 @@
-import * as webllm from 'https://mlc.ai/web-llm/dist/index.js';
-
 const input = document.getElementById('input');
 const sendBtn = document.getElementById('send');
 const chatBox = document.getElementById('chat-box');
 
-let chatModule;
-
-async function initModel() {
-  addMessage('⏳ در حال بارگذاری مدل هوش مصنوعی...', 'bot');
-  chatModule = await webllm.CreateChatModule();
-  await chatModule.reload('TinyLlama-1.1B-Chat-v1.0-q4f32_1-MLC'); // مدل سبک‌تر برای تست سریع
-  addMessage('✅ مدل بارگذاری شد! حالا می‌تونی سوال بپرسی.', 'bot');
-}
+let memory = []; // حافظه مکالمه
+let personality = {
+  tone: 'دوستانه',
+  style: 'خلاق',
+  knowledge: [],
+};
 
 sendBtn.addEventListener('click', handleSend);
 input.addEventListener('keypress', (e) => {
   if (e.key === 'Enter') handleSend();
 });
 
-async function handleSend() {
+function handleSend() {
   const userText = input.value.trim();
-  if (!userText || !chatModule) return;
+  if (!userText) return;
 
   addMessage(userText, 'user');
   input.value = '';
 
-  const reply = await chatModule.chat({ prompt: userText });
-  addMessage(reply.output, 'bot');
+  const reply = generateResponse(userText);
+  memory.push({ user: userText, bot: reply });
+  setTimeout(() => addMessage(reply, 'bot'), 500);
+}
+
+function generateResponse(text) {
+  const lower = text.toLowerCase();
+  let response = '';
+
+  // یادگیری از سوالات قبلی
+  if (lower.includes('اسم من')) {
+    const name = extractName(text);
+    personality.name = name;
+    response = `خوشحال شدم ${name} عزیز! حالا دیگه اسمت رو یاد گرفتم.`;
+  } else if (lower.includes('تو کی هستی')) {
+    response = `من یه هوش مصنوعی هستم که توسط @ureof ساخته شده‌ام. فعلاً دارم یاد می‌گیرم!`;
+  } else if (lower.includes('دوست داری')) {
+    response = `من عاشق یاد گرفتن چیزای جدیدم. هر چی بیشتر باهام حرف بزنی، بهتر می‌شم.`;
+  } else if (lower.includes('یاد گرفتی')) {
+    response = `تا الان اینا رو یاد گرفتم:\n${personality.knowledge.join('\n') || 'هنوز چیزی یاد نگرفتم 😅'}`;
+  } else {
+    // یادگیری عمومی
+    personality.knowledge.push(text);
+    response = `جالب بود! اینو یاد گرفتم: "${text}"`;
+  }
+
+  return applyPersonality(response);
+}
+
+function extractName(text) {
+  const match = text.match(/اسم من (.+)/);
+  return match ? match[1].trim() : 'دوست من';
+}
+
+function applyPersonality(text) {
+  if (personality.tone === 'دوستانه') {
+    return text + ' 😊';
+  }
+  return text;
 }
 
 function addMessage(text, role) {
@@ -36,5 +69,3 @@ function addMessage(text, role) {
   chatBox.appendChild(div);
   chatBox.scrollTop = chatBox.scrollHeight;
 }
-
-initModel();
