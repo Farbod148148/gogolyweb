@@ -1,12 +1,12 @@
-/* فونت فارسی */
+/* فونت فارسی حرفه‌ای */
 @import url('https://cdn.jsdelivr.net/gh/rastikerdar/shabnam-font@v5.0.1/dist/font-face.css');
 
 body {
   margin: 0;
   padding: 0;
   font-family: 'Shabnam', sans-serif;
-  background: radial-gradient(circle at top left, #1e1e2f, #0f0f1a);
-  color: #f0f0f0;
+  background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+  color: #f5f5f5;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -14,13 +14,14 @@ body {
   overflow: hidden;
 }
 
+/* ظرف اصلی چت */
 .chat-container {
   width: 100%;
   max-width: 720px;
-  background: rgba(30, 30, 30, 0.6);
-  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(30px);
   border-radius: 20px;
-  box-shadow: 0 0 40px rgba(0, 255, 255, 0.1);
+  box-shadow: 0 0 60px rgba(0, 255, 255, 0.1);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -32,25 +33,27 @@ body {
   to { opacity: 1; transform: scale(1); }
 }
 
+/* هدر */
 header {
   padding: 1rem;
   text-align: center;
   background: rgba(255,255,255,0.05);
-  border-bottom: 1px solid #444;
+  border-bottom: 1px solid #333;
 }
 
 header h1 {
   margin: 0;
   font-size: 2rem;
   color: #00ffff;
-  text-shadow: 0 0 5px #00ffff;
+  text-shadow: 0 0 10px #00ffff;
 }
 
 .subtitle {
   font-size: 0.9rem;
-  color: #ccc;
+  color: #aaa;
 }
 
+/* بخش پیام‌ها */
 main {
   flex: 1;
   padding: 1rem;
@@ -59,6 +62,7 @@ main {
   flex-direction: column;
 }
 
+/* پیام‌ها با انیمیشن */
 .message {
   margin: 1rem 0;
   padding: 1rem;
@@ -67,36 +71,37 @@ main {
   word-wrap: break-word;
   white-space: pre-wrap;
   font-size: 1rem;
-  animation: slideUp 0.4s ease;
+  animation: slideUp 0.5s ease;
   opacity: 0;
   animation-fill-mode: forwards;
 }
 
 @keyframes slideUp {
-  from { transform: translateY(20px); opacity: 0; }
+  from { transform: translateY(30px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
 
 .user {
-  background: linear-gradient(to left, #3a3a5a, #2a2a3a);
+  background: linear-gradient(to left, #2c2c2c, #3a3a3a);
   align-self: flex-end;
   text-align: right;
   color: #fff;
-  box-shadow: 0 0 10px rgba(0,255,255,0.2);
+  box-shadow: 0 0 12px rgba(0,255,255,0.2);
 }
 
 .bot {
-  background: linear-gradient(to right, #2a2a3a, #3a3a5a);
+  background: linear-gradient(to right, #3a3a3a, #2c2c2c);
   align-self: flex-start;
   text-align: left;
   color: #fff;
-  box-shadow: 0 0 10px rgba(255,0,255,0.2);
+  box-shadow: 0 0 12px rgba(255,0,255,0.2);
 }
 
+/* فوتر و ورودی */
 footer {
   display: flex;
   padding: 1rem;
-  border-top: 1px solid #444;
+  border-top: 1px solid #333;
   background: rgba(255,255,255,0.05);
 }
 
@@ -112,10 +117,15 @@ input {
   transition: background 0.3s ease;
 }
 
+input::placeholder {
+  color: #ccc;
+}
+
 input:focus {
   background: rgba(255,255,255,0.2);
 }
 
+/* دکمه ارسال */
 button {
   margin-right: 0.5rem;
   padding: 0.8rem 1.2rem;
@@ -127,6 +137,7 @@ button {
   cursor: pointer;
   transition: transform 0.2s ease, background-color 0.3s ease;
   font-weight: bold;
+  box-shadow: 0 0 10px #00ffff;
 }
 
 button:hover {
