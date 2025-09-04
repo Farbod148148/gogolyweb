@@ -2,13 +2,16 @@ const input = document.getElementById('input');
 const sendBtn = document.getElementById('send');
 const chatBox = document.getElementById('chat-box');
 
-let memory = []; // حافظه مکالمه
+// حافظه و دانش
+let memory = [];
+let knowledge = {};
 let personality = {
   tone: 'دوستانه',
   style: 'خلاق',
-  knowledge: [],
+  name: 'هاشم',
 };
 
+// ارسال پیام
 sendBtn.addEventListener('click', handleSend);
 input.addEventListener('keypress', (e) => {
   if (e.key === 'Enter') handleSend();
@@ -21,47 +24,79 @@ function handleSend() {
   addMessage(userText, 'user');
   input.value = '';
 
+  learnFrom(userText);
   const reply = generateResponse(userText);
   memory.push({ user: userText, bot: reply });
+
   setTimeout(() => addMessage(reply, 'bot'), 500);
 }
 
+// یادگیری از پیام
+function learnFrom(text) {
+  const words = text.split(/\s+/);
+  words.forEach(word => {
+    if (!knowledge[word]) {
+      knowledge[word] = { count: 1, examples: [text] };
+    } else {
+      knowledge[word].count++;
+      knowledge[word].examples.push(text);
+    }
+  });
+}
+
+// تولید پاسخ
 function generateResponse(text) {
   const lower = text.toLowerCase();
-  let response = '';
 
-  // یادگیری از سوالات قبلی
   if (lower.includes('اسم من')) {
     const name = extractName(text);
     personality.name = name;
-    response = `خوشحال شدم ${name} عزیز! حالا دیگه اسمت رو یاد گرفتم.`;
-  } else if (lower.includes('تو کی هستی')) {
-    response = `من یه هوش مصنوعی هستم که توسط @ureof ساخته شده‌ام. فعلاً دارم یاد می‌گیرم!`;
-  } else if (lower.includes('دوست داری')) {
-    response = `من عاشق یاد گرفتن چیزای جدیدم. هر چی بیشتر باهام حرف بزنی، بهتر می‌شم.`;
-  } else if (lower.includes('یاد گرفتی')) {
-    response = `تا الان اینا رو یاد گرفتم:\n${personality.knowledge.join('\n') || 'هنوز چیزی یاد نگرفتم 😅'}`;
-  } else {
-    // یادگیری عمومی
-    personality.knowledge.push(text);
-    response = `جالب بود! اینو یاد گرفتم: "${text}"`;
+    return `خوشحال شدم ${name} عزیز! حالا اسمت رو یاد گرفتم.`;
   }
 
-  return applyPersonality(response);
+  if (lower.includes('چه چیزایی یاد گرفتی')) {
+    const topWords = Object.entries(knowledge)
+      .sort((a, b) => b[1].count - a[1].count)
+      .slice(0, 5)
+      .map(([word, data]) => `${word} (${data.count} بار)`);
+
+    return `تا الان اینا رو بیشتر یاد گرفتم:\n${topWords.join('\n')}`;
+  }
+
+  if (lower.includes('تو کی هستی')) {
+    return `من ${personality.name} هستم، یه هوش مصنوعی که داره از تو یاد می‌گیره.`;
+  }
+
+  // پاسخ خلاقانه بر اساس حافظه
+  const related = findRelatedWords(text);
+  if (related.length > 0) {
+    return `جمله‌ات منو یاد اینا انداخت:\n${related.join('\n')}`;
+  }
+
+  return `جالب بود! این جمله رو هم یاد گرفتم: "${text}"`;
 }
 
+// استخراج اسم
 function extractName(text) {
   const match = text.match(/اسم من (.+)/);
   return match ? match[1].trim() : 'دوست من';
 }
 
-function applyPersonality(text) {
-  if (personality.tone === 'دوستانه') {
-    return text + ' 😊';
-  }
-  return text;
+// پیدا کردن کلمات مرتبط
+function findRelatedWords(text) {
+  const words = text.split(/\s+/);
+  let results = [];
+
+  words.forEach(word => {
+    if (knowledge[word] && knowledge[word].examples.length > 1) {
+      results.push(`"${word}" در جمله‌هایی مثل: ${knowledge[word].examples.slice(0, 2).join(' | ')}`);
+    }
+  });
+
+  return results;
 }
 
+// نمایش پیام
 function addMessage(text, role) {
   const div = document.createElement('div');
   div.className = `message ${role}`;
