@@ -9,7 +9,7 @@ let chatModule;
 async function initModel() {
   addMessage('⏳ در حال بارگذاری مدل هوش مصنوعی...', 'bot');
   chatModule = await webllm.CreateChatModule();
-  await chatModule.reload('Llama-3-8B-Instruct-q4f32_1-MLC');
+  await chatModule.reload('TinyLlama-1.1B-Chat-v1.0-q4f32_1-MLC'); // مدل سبک‌تر برای تست سریع
   addMessage('✅ مدل بارگذاری شد! حالا می‌تونی سوال بپرسی.', 'bot');
 }
 
