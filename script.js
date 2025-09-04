@@ -1,17 +1,24 @@
+import {
+  loadMemory, saveMemory,
+  loadKnowledge, saveKnowledge,
+  loadPersonality, savePersonality
+} from './memory.js';
+
 const input = document.getElementById('input');
 const sendBtn = document.getElementById('send');
 const chatBox = document.getElementById('chat-box');
 
-// حافظه و دانش
-let memory = [];
-let knowledge = {};
-let personality = {
-  tone: 'دوستانه',
-  style: 'خلاق',
-  name: 'هاشم',
-};
+// بارگذاری حافظه
+let memory = loadMemory();
+let knowledge = loadKnowledge();
+let personality = loadPersonality();
 
-// ارسال پیام
+// نمایش مکالمات قبلی
+memory.forEach(entry => {
+  addMessage(entry.user, 'user');
+  addMessage(entry.bot, 'bot');
+});
+
 sendBtn.addEventListener('click', handleSend);
 input.addEventListener('keypress', (e) => {
   if (e.key === 'Enter') handleSend();
@@ -28,10 +35,13 @@ function handleSend() {
   const reply = generateResponse(userText);
   memory.push({ user: userText, bot: reply });
 
+  saveMemory(memory);
+  saveKnowledge(knowledge);
+  savePersonality(personality);
+
   setTimeout(() => addMessage(reply, 'bot'), 500);
 }
 
-// یادگیری از پیام
 function learnFrom(text) {
   const words = text.split(/\s+/);
   words.forEach(word => {
@@ -44,7 +54,6 @@ function learnFrom(text) {
   });
 }
 
-// تولید پاسخ
 function generateResponse(text) {
   const lower = text.toLowerCase();
 
@@ -67,7 +76,6 @@ function generateResponse(text) {
     return `من ${personality.name} هستم، یه هوش مصنوعی که داره از تو یاد می‌گیره.`;
   }
 
-  // پاسخ خلاقانه بر اساس حافظه
   const related = findRelatedWords(text);
   if (related.length > 0) {
     return `جمله‌ات منو یاد اینا انداخت:\n${related.join('\n')}`;
@@ -76,13 +84,11 @@ function generateResponse(text) {
   return `جالب بود! این جمله رو هم یاد گرفتم: "${text}"`;
 }
 
-// استخراج اسم
 function extractName(text) {
   const match = text.match(/اسم من (.+)/);
   return match ? match[1].trim() : 'دوست من';
 }
 
-// پیدا کردن کلمات مرتبط
 function findRelatedWords(text) {
   const words = text.split(/\s+/);
   let results = [];
@@ -96,7 +102,6 @@ function findRelatedWords(text) {
   return results;
 }
 
-// نمایش پیام
 function addMessage(text, role) {
   const div = document.createElement('div');
   div.className = `message ${role}`;
