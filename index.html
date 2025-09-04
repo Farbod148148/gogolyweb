@@ -3,36 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <title>هاشم AI</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      background: #f0f0f0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 2rem;
-    }
-    #chat {
-      width: 100%;
-      max-width: 600px;
-      background: white;
-      border-radius: 12px;
-      padding: 1rem;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    .message {
-      margin: 0.5rem 0;
-      padding: 0.5rem;
-      border-radius: 8px;
-    }
-    .user { background: #d1e7dd; text-align: right; }
-    .bot { background: #f8d7da; text-align: left; }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>چت با هاشم AI</h1>
-  <div id="chat"></div>
-  <input id="input" type="text" placeholder="سوالت رو بپرس..." style="width: 100%; max-width: 600px; margin-top: 1rem; padding: 0.5rem;">
-  <script src="main.js"></script>
+  <div class="container">
+    <h1>💬 چت با <strong>هاشم AI</strong></h1>
+    <div class="chat-box">
+      <div class="message bot" onclick="copyText(this)">
+        <strong>سلام! من هاشم ای‌آی هستم.</strong><br>
+        سازنده من در تلگرام: <span class="highlight">@ureof</span>
+      </div>
+      <div class="message user" onclick="copyText(this)">
+        <strong>تو کی هستی؟</strong>
+      </div>
+    </div>
+    <div class="note">ارسال پیام غیرفعال است. فقط برای نمایش طراحی شده.</div>
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>
