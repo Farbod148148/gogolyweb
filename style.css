@@ -86,3 +86,88 @@ h1 {
     transform: translateY(-20px) scaleX(1.05);
   }
 }
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Vazirmatn', sans-serif;
+  background: linear-gradient(135deg, #e0eafc, #cfdef3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#animated-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+  animation: waveMove 10s ease-in-out infinite alternate;
+}
+
+@keyframes waveMove {
+  0% { transform: translateY(0) scaleX(1); }
+  100% { transform: translateY(-20px) scaleX(1.05); }
+}
+
+.container {
+  backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  max-width: 600px;
+  width: 90%;
+  text-align: center;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.chat-box {
+  background: rgba(255,255,255,0.6);
+  border-radius: 12px;
+  padding: 1rem;
+  max-height: 300px;
+  overflow-y: auto;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+  margin-bottom: 1rem;
+}
+
+.message {
+  margin: 1rem 0;
+  padding: 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  direction: rtl;
+}
+
+.message:hover {
+  transform: scale(1.02);
+}
+
+.user {
+  background: #d1e7dd;
+  text-align: right;
+}
+
+.bot {
+  background: #f8d7da;
+  text-align: left;
+}
+
+input {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 10px;
+  border: none;
+  font-size: 1rem;
+  outline: none;
+}
