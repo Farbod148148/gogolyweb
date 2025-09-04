@@ -27,7 +27,7 @@ async function handleSend() {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'openrouter/auto',
+        model: 'deepseek/deepseek-r1:free',
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userText }
@@ -35,11 +35,17 @@ async function handleSend() {
       })
     });
 
+    if (!response.ok) {
+      const errorText = await response.text();
+      addMessage(`❌ خطا از سمت API:\n${errorText}`, 'bot');
+      return;
+    }
+
     const data = await response.json();
-    const botText = data.choices?.[0]?.message?.content || 'پاسخی دریافت نشد.';
+    const botText = data.choices?.[0]?.message?.content || '❌ پاسخ قابل پردازش نبود.';
     addMessage(botText, 'bot');
   } catch (error) {
-    addMessage('خطا در ارتباط با سرور.', 'bot');
+    addMessage('❌ خطا در ارتباط با سرور یا مرورگر.', 'bot');
     console.error(error);
   }
 }
