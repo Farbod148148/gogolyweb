@@ -1,3 +1,4 @@
+import { saveToHistory, renderHistory } from './history.js';
 const input = document.getElementById('input');
 const chatBox = document.getElementById('chat-box');
 
