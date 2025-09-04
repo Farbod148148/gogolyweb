@@ -1,8 +1,8 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Shabnam', sans-serif;
-  background: linear-gradient(135deg, #e0eafc, #cfdef3);
+  font-family: 'Vazirmatn', sans-serif;
+  background: linear-gradient(135deg, #dbeafe, #f0f9ff);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,8 +11,8 @@ body {
 
 .chat-container {
   width: 100%;
-  max-width: 700px;
-  background: rgba(255, 255, 255, 0.4);
+  max-width: 720px;
+  background: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(20px);
   border-radius: 20px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.2);
@@ -30,8 +30,8 @@ header {
 
 header h1 {
   margin: 0;
-  font-size: 1.8rem;
-  color: #333;
+  font-size: 2rem;
+  color: #222;
 }
 
 .subtitle {
@@ -55,6 +55,7 @@ main {
   word-wrap: break-word;
   white-space: pre-wrap;
   cursor: pointer;
+  font-size: 1rem;
 }
 
 .user {
