@@ -2,14 +2,9 @@ const input = document.getElementById('input');
 const sendBtn = document.getElementById('send');
 const chatBox = document.getElementById('chat-box');
 
+sendBtn.addEventListener('click', handleSend);
 input.addEventListener('keypress', (e) => {
-  if (e.key === 'Enter') {
-    handleSend();
-  }
-});
-
-sendBtn.addEventListener('click', () => {
-  handleSend();
+  if (e.key === 'Enter') handleSend();
 });
 
 async function handleSend() {
